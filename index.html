@@ -17,29 +17,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+    <!--Axios import-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Whether Weather</title>
   </head>
   <body>
     <!--The main text of the page is divided by three divisions and then further split up by horizontal rulers-->
     <div class="borders">
-      <h2>Temperature: 30° F</h2>
-      <h3>Location: Houston</h3>
+      <h2>Temperature: <span class="curTemp">30</span>° <span class="curUnit">C</span></h2>
+      <h3>Location: <span id="curLoc">Houston</span></h3>
+      <h3>Date: <span id="curDay"></span></h3>
       <br />
       <div class="container">
         <div class="row">
         <div class="col-6">
           <p>Time: 10:00 AM</p>
           
-          <p>Cloudy</p>
+          <p><span class="curWeather">Cloudy</span></p>
         </div>
     <div class="col-6">
-      <p>Chance of rain: x</p>
+      <p>Humidity: <span class="curHum">x</span></p>
       <p>Humidity: 0</p>
       </div>
     </div>
     </div>
     <div class= "selectUnit">
-    <h3><a href=""> C </a> / <a href=""> F </a></h3>
+    <h3><a href="" id="celsisus"> C </a> / <a href="" id="farenheight"> F </a></h3>
   </div>
     <!--Forecast section-->
       <hr />
@@ -50,23 +53,26 @@
         <div class= "row">
           <div class = "col-4">
         <li>
-          Day 1
-          <p>Temperature: 30° F</p>
-          <p>Chance of rain: 20%</p>
+          At <span class="curTime">x</span> hours
+          <p>Temperature: <span class="curTemp">30°</span> <span class="curUnit">C</span></p>
+          <p>Humidity: <span class="curHum">x</span></p>
+          <p><span class= "curWeather">Cloudyyyy</span></p>
         </li>
       </div>
       <div class = "col-4">
         <li>
-          Day 2
-          <p>Temperature: 30° F</p>
-          <p>Chance of rain: 20%</p>
+          At <span class="curTime">x</span> hours
+          <p>Temperature: <span class="curTemp">30°</span> <span class="curUnit">C</span></p>
+          <p>Humidity: <span class="curHum">x</span></p>
+          <p><span class= "curWeather">Cloudyyyy</span></p>
         </li>
       </div>
         <div class = "col-4">
         <li>
-          Day 3
-          <p>Temperature: 30° F</p>
-          <p>Chance of rain: 20%</p>
+          At <span class="curTime">x</span> hours
+          <p>Temperature: <span class="curTemp">30°</span> <span class="curUnit">C</span></p>
+          <p>Humidity: <span class="curHum">x</span></p>
+          <p><span class= "curWeather">Cloudyyyy</span></p>
         </li>
       </div>
       </div>
@@ -80,7 +86,7 @@
         <form>
         <div class="row">
           <div class = "col-10">
-            <input class="adjust form-control"type="text" placeholder="Enter a city: ie Houston" id="text_input"></input>
+            <input class="adjust form-control"type="text" placeholder="Enter a city: ie Houston" id="text_input" ></input>
           </div>
           <div class = "col-1">
             <input class = "btn btn-outline-secondary" type="submit" id="submitter" value="Search"></input>
@@ -90,5 +96,7 @@
       </div>
     </div>
     </div>
+  </div>
+  <script src="src/duetsandstuff.js"></script>
   </body>
 </html>

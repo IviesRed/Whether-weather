@@ -43,6 +43,7 @@ a:link {
 }
 .borders {
   background-color: rgba(143, 184, 222, 0.6);
+  backdrop-filter: blur(10px);
   max-width: 65%;
   color: black;
   margin: 80px auto;
