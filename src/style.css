@@ -9,6 +9,7 @@ hr {
 }
 p {
   text-align: center;
+  font-size: 25px;
 }
 hr {
   color: black;
@@ -28,6 +29,10 @@ body {
   background-repeat: no-repeat;
   backdrop-filter: blur(10px);
   background-size: cover;
+}
+img {
+  width: 50px;
+  height: auto;
 }
 a:link {
   text-decoration: none;
