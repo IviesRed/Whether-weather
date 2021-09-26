@@ -6,6 +6,8 @@ let weathers = [];
 let humidities = [];
 let conditions = [];
 let speed = [];
+
+//Gets current date and time whenever called
 function formatDate() {
   let date = new Date();
   let hours = date.getHours();
@@ -13,16 +15,21 @@ function formatDate() {
   let month = date.getMonth();
   let day = date.getDate();
   let meridiem = "AM";
+  let fixer = "";
   if (hours > 12) {
     hours = hours - 12;
     meridiem = "PM";
   }
+  if (minutes < 10) {
+    fixer = "0";
+  }
   let setTime = document.getElementById("curTime");
-  setTime.innerHTML = `${hours}:${minutes} ${meridiem}`;
+  setTime.innerHTML = `${hours}:${fixer}${minutes} ${meridiem}`;
   let today = document.getElementById("curDay");
   today.innerHTML = `${months[month]} ${day}`;
 }
 
+//Converts whatever month is entered into a three letter abbreviation. Used in formatDate function
 let months = [
   "Jan",
   "Feb",
@@ -37,19 +44,18 @@ let months = [
   "Nov",
   "Dec",
 ];
+
+//Unit control 0 is celsius 1 is farenheit
 let unit = 0;
+
+//Two urls used for code
 let apiUrlC = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 let apiUrlF = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`;
-let currentUrl = `https://api.openweathermap.org/data/2.5/find?q=${city}&appid=${apiKey}&units=metric`;
-let now = new Date();
-
-now.getHours();
 
 // Gets weather for the cur hour and the forecast for several hours after.//
 function getWeather() {
   apiUrlC = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
   apiUrlF = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`;
-  //currentUrl = `https://api.openweathermap.org/data/2.5/find?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrlC).then(getDataC);
   axios.get(apiUrlF).then(getDataF);
   formatDate();
@@ -67,8 +73,8 @@ function getDataC(response) {
 //Gets farenheit and the rest of the data and stores it
 function getDataF(response) {
   let x = 0;
-  //let value = response.data.list[0].dt_txt;
 
+  //Stores values that'll appear in page from top to bottom and left to right.
   while (x < 4) {
     tempsF[x] = response.data.list[x].main.temp;
     weathers[x] = response.data.list[x].weather[0].main;
@@ -79,19 +85,12 @@ function getDataF(response) {
     x = x + 1;
   }
   speed[1] = response.data.list[0].wind.speed;
-  //value = response.data.list[0].dt_txt;
-  //let month = `${value[5]}${value[6]}`;
-  //month = parseInt(month, 10);
-  //let day = `${value[8]}${value[9]}`;
-  //day = parseInt(day, 10);
-
-  //value = response.data.list[0].dt_txt;
   updateWeather();
 }
 
-function getCurrent(response) {}
-//Updates the weather
+//Updates the weather using the previously made arrays in getDataF and getDataC
 function updateWeather() {
+  //Establishing which parts of HMTL need to edited
   let temp = document.getElementsByClassName("curTemp");
   let type = document.getElementsByClassName("curUnit");
   let wthr = document.getElementsByClassName("curWeather");
@@ -99,7 +98,11 @@ function updateWeather() {
   let cond = document.getElementsByClassName("curCond");
   let wind = document.getElementById("curWind");
   let spdType = document.getElementById("speedType");
+
+  //Initialize the variable used for looping
   let x = 0;
+
+  //Set the humidities and weather conditions as well as changing weather icons
   let conditionUrl = " ";
   while (4 > x) {
     wthr[x].innerHTML = `${weathers[x]}`;
@@ -108,8 +111,9 @@ function updateWeather() {
     cond[x].setAttribute("src", `${conditionUrl}`);
     x = x + 1;
   }
-
+  //Resetting looping variable
   x = 0;
+  //Setting the metric variables, celsius and meters a second.
   if (unit === 0) {
     //Celsius update if unit is set to celsius
     while (4 > x) {
@@ -120,7 +124,7 @@ function updateWeather() {
     wind.innerHTML = `${speed[unit]}`;
     spdType.innerHTML = `m/s`;
 
-    //Farenheit update if unit is set to farenheit
+    //Setting the imperial variables, farenheit and miles an hour.
   } else {
     while (4 > x) {
       temp[x].innerHTML = `${tempsF[x]}`;
@@ -131,35 +135,43 @@ function updateWeather() {
     spdType.innerHTML = `mi/h`;
   }
 }
-
+//Making the submit button work and ordering a forced update of the page.
 function submitValues(event) {
   event.preventDefault();
   city = document.getElementById("text_input").value;
   loc = document.getElementById("curLoc");
+  //Prevents the user from entering blank values.
   if (city === "") {
     city = "Houston";
   }
   loc.innerHTML = `${city}`;
   getWeather();
 }
+//Sets unit to metric and begins page update
 function celsiClick(event) {
   event.preventDefault();
   unit = 0;
   getWeather();
 }
+//Sets unit to imperial and begins page update
 function farenhClick(event) {
   event.preventDefault();
   unit = 1;
   getWeather();
 }
+
+//Ensures the page updates properly if for some reason all values weren't set properly.
 function startUp() {
   setTimeout(function () {
     // rest of code here
     getWeather();
   }, 100);
 }
+
+//Start up functions to do an initial update of the page.
 getWeather();
 startUp();
+//Code to ensure buttons
 button = document.getElementById("submitter");
 button.addEventListener("click", submitValues);
 celsi = document.getElementById("celsisus");
