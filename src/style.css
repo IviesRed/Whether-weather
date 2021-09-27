@@ -30,6 +30,10 @@ body {
   backdrop-filter: blur(10px);
   background-size: cover;
 }
+small {
+  position: relative;
+  left: 38%;
+}
 img {
   width: 50px;
   height: auto;

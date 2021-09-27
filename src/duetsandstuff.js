@@ -16,10 +16,12 @@ function formatDate() {
   let day = date.getDate();
   let meridiem = "AM";
   let fixer = "";
+  //Sets time to PM if needed
   if (hours > 12) {
     hours = hours - 12;
     meridiem = "PM";
   }
+  //Adds a 0 before the minute if needed
   if (minutes < 10) {
     fixer = "0";
   }
