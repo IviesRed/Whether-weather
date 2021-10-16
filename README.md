@@ -1,3 +1,3 @@
 # Whether-weather
-Site with latest here ->
+Site with latest build here ->
 https://whetherweather.netlify.app
